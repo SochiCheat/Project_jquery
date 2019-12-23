@@ -1,3 +1,4 @@
+// get URl from https
 function getUrl() {
     var url = "https://raw.githubusercontent.com/radytrainer/test-api/master/test.json";
     return url;
@@ -11,6 +12,7 @@ $(document).ready(function () {
         getRecipe(recipes);
     });
 });
+// request API With ajax
 function requestApi() {
     $.ajax({
         dataType: "json",
@@ -32,11 +34,14 @@ function chooseRecipe(recipe) {
     });
     $('#recipe').append(option);
 }
-// get recipe call pi recipe console(recipes)
+
+// hide ruler and caltulate for add person 
 $('#ruler').hide();
 $('#add').hide();
+$('#addmem').hide();
 var dataQuantity = [];
-var oldGuest;
+var numOldGuest;
+// get recipe call from recipe  console(recipes)
 function getRecipe(recipeId) {
     allData.forEach(element => {
         // console.log(element);
@@ -49,23 +54,31 @@ function getRecipe(recipeId) {
             showIngredient(element.ingredients);
             // showStep()....
             showStep(element.instructions);
-          
+            // show 
             dataQuantity = element.ingredients;
-            oldGuest = element.nbGuests;
+            numOldGuest = element.nbGuests;
         }
     })
+    // show ruler and show caltulate for add person 
     $('#ruler').show();
     $('#add').show();
+    $('#addmem').show();
 }
 function  getMember(nbGuests){
+   
     var choose = "";
+    
         choose +=`
-        <h4>Add Member</h4>  &nbsp; &nbsp;
-        <div class="input-group-append">
+      
+        <div class="input-group-prepend ">
+        
             <button class="btn btn-danger" id="minus" type="submit">&#x2212;</button>  
         </div>
+        
         <input type="text" id="increase" class="form-control text-center" value="${nbGuests}" disabled >
+        
         <div class="input-group-append">
+        
           <button class="btn btn-success" type="submit" id="plus">&#x2b;</button>  
          </div>
         `;
@@ -109,7 +122,7 @@ function showRecipe(name, img) {
         <h2 class="text-center">${name}</h2>
         </div>
         <div class="col-4">
-            <img src="${img}" width="150px">
+            <img src="${img}" width="160px">
         </div>
         <div class="col-2"></div>
     `;
@@ -119,15 +132,17 @@ function showRecipe(name, img) {
 function showIngredient(ing) {
  var result1 = "";
  var ingrident = `
-    <h4>Ingredient</h4>
+    <h4 class="text-center ">Ingredient</h4>
  `;
     ing.forEach(element =>{
+        // makes distructuring
+        var {quantity,unit,name} = element;
         result1 += `
             <tr>
-                <td><img src="${element.iconUrl}" width="85px"></td>
-                <td>${element.quantity}</td>
-                <td>${element.unit[0]}</td>
-                <td>${element.name}</td>
+                <td><img src="${element.iconUrl}" width="120px" class="text-light"></td>
+                <td>${quantity}</td>
+                <td>${unit[0]}</td>
+                <td>${name}</td>
             </tr>
         `;
     })
@@ -136,35 +151,34 @@ function showIngredient(ing) {
 }
 // function to create step
 function showStep(instructions) {
-   
     var result2 = "";
     var data = instructions.split('<step>');
-    for(var i =1;i<data.length;i++){  
+    for(var i = 1; i < data.length; i++){  
         var instruction = `
-        <h4>instructions</h4>
+        <h4 class="text-center ">instructions</h4>
         `;  
     result2 += `
-        <h5 class="text-primary">Step: ${i}</h5>
+        <h5 class="text-primary ">Step:${i}</h5>
         <p>${data[i]}</p>
     `;
    }
    $('#instration').html(instruction);
     $('#text').html(result2);
 }
-
+// function to cultulate number of guest
 function getGuest(newGuest) {
     var newQuantity;
     var resultQuantity = "";
     dataQuantity.forEach(element => {
         var {quantity,iconUrl,name,unit} = element;
-        var chi = newGuest * quantity;
-        newQuantity = chi / oldGuest;
+        var mem = newGuest * quantity;
+        newQuantity = mem / numOldGuest;
         resultQuantity += `
         <tr>
-        <td><img src="${iconUrl}" width="85px"></td>
-        <td id='quantity'>${newQuantity}</td>
-        <td>${unit[0]}</td>
-        <td>${name}</td>
+            <td><img src="${iconUrl}" width="85px"></td>
+            <td id='quantity'>${newQuantity}</td>
+            <td>${unit[0]}</td>
+            <td>${name}</td>
         </tr>
     `;
     });

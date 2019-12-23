@@ -7,20 +7,32 @@
     <title>API Select</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <style>
+        body{
+            /* background-color: powderblue; */
+            background-image: url(./11.jpg);
+            background-position: center;
+            background-size: cover;
+            
+        }
      
         tr,td{
             border: none !important;
+         
         }
         p,h5{
             margin: 18px;
            
         }
+        
         .ruler{
             border-left: 2px solid blue;
-            height: 65%;
+            height: 90%;
             position: absolute;
             left: 48%;
-            margin-top: 280px;
+            margin-top:290px;
+        }
+        h4{
+            margin-bottom: 5px;
         }
         
     </style>
@@ -32,20 +44,26 @@
             <div class="col-4"></div>
             <div class="col-4">
                 <select id="recipe" class="form-control">
-                    <option value="" disabled selected>Choose Recipe...</option>
+                    <option value="" disabled selected class="form-control">Choose Recipe...</option>
                 </select>
-                <hr>
+               
             </div>
+           
             <div class="col-4"></div>
         </div>
+      
         <div class=" text-center ruler" id="ruler"></div>
         <h1 class="display-1 text-center"></h1>
+       
         <div class="row" id="recipe-result"></div>  
         </div>
+        <hr class="text-light">
+     
                 <div class="container mt-5">
                     <div class="row">
                         <div class="col-4"></div>
                         <div class="col-4">
+                                <h4 class="text-center" id="addmem">Add Member</h4>
                         <!-- class to increase member or decrease member -->
                             <div class="input-group mb-3" id="choose"></div>
                             </div>
@@ -53,6 +71,7 @@
                         <div class="col-4"></div>
                     </div>
                 </div>
+               
                 <!-- table for ingredient and instruction -->
         <div class="container">
                 <div class="row mt-3">
