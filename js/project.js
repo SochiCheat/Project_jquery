@@ -1,4 +1,4 @@
-// get URl from https
+// Request and get data from json
 function getUrl() {
     var url = "https://raw.githubusercontent.com/radytrainer/test-api/master/test.json";
     return url;
@@ -23,6 +23,7 @@ function requestApi() {
     });
 }
 var allData = [];
+// function to choose recipe from API in combobox
 function chooseRecipe(recipe) {
     allData = recipe;
     var option = "";
@@ -34,11 +35,11 @@ function chooseRecipe(recipe) {
     });
     $('#recipe').append(option);
 }
-
 // hide ruler and caltulate for add person 
-$('#ruler').hide();
-$('#add').hide();
 $('#addmem').hide();
+$('#border').hide();
+// $('#ruler').hide();
+// $('#add').hide();
 var dataQuantity = [];
 var numOldGuest;
 // get recipe call from recipe  console(recipes)
@@ -60,32 +61,26 @@ function getRecipe(recipeId) {
         }
     })
     // show ruler and show caltulate for add person 
-    $('#ruler').show();
-    $('#add').show();
     $('#addmem').show();
+    $('#border').show();
+    // $('#ruler').show();
+    // $('#add').show();
 }
-function  getMember(nbGuests){
-   
+function  getMember(nbGuests){ 
     var choose = "";
-    
         choose +=`
-      
-        <div class="input-group-prepend ">
-        
+        <div class="input-group-prepend">
             <button class="btn btn-danger" id="minus" type="submit">&#x2212;</button>  
         </div>
-        
         <input type="text" id="increase" class="form-control text-center" value="${nbGuests}" disabled >
-        
         <div class="input-group-append">
-        
-          <button class="btn btn-success" type="submit" id="plus">&#x2b;</button>  
+          <button class="btn btn-success" type="submit" id="mul">&#x2b;</button>  
          </div>
         `;
         $('#choose').html(choose);
 
  // function when we click minus button
-$("#plus").on('click', function () {
+$("#mul").on('click', function () {
     var number = parseInt($("#increase").val());
     addIncreas(number);
 })
@@ -111,19 +106,19 @@ function addDcreas(member) {
         getGuest($("#increase").val());
     }
 }
-
 // function to create recipe 
 function showRecipe(name, img) {
     var result = "";
     result += `
-    
         <div class="col-2"></div>
-        <div class="col-4">
+        <div class="col-4"  >
+        </div> 
+        <marquee scrollamount="5">
+        <div class="col-4"   style="margin-top:20px; border: 5px solid green; border-radius: 20px; background:rgb(238, 177, 65);width:500%; height:250%" >
         <h2 class="text-center">${name}</h2>
+        <img src="${img}" width="200px" class=" img-fluid rounded-circle">
         </div>
-        <div class="col-4">
-            <img src="${img}" width="160px">
-        </div>
+        </marquee>
         <div class="col-2"></div>
     `;
     $('#recipe-result').html(result);
@@ -139,7 +134,7 @@ function showIngredient(ing) {
         var {quantity,unit,name} = element;
         result1 += `
             <tr>
-                <td><img src="${element.iconUrl}" width="120px" class="text-light"></td>
+              <td><img src="${element.iconUrl}" width="120px"></td>
                 <td>${quantity}</td>
                 <td>${unit[0]}</td>
                 <td>${name}</td>
@@ -155,17 +150,17 @@ function showStep(instructions) {
     var data = instructions.split('<step>');
     for(var i = 1; i < data.length; i++){  
         var instruction = `
-        <h4 class="text-center ">instructions</h4>
+        <h4 class="text-center">instructions</h4>
         `;  
     result2 += `
-        <h5 class="text-primary ">Step:${i}</h5>
+        <h5>Step:${i}</h5>
         <p>${data[i]}</p>
     `;
    }
    $('#instration').html(instruction);
     $('#text').html(result2);
 }
-// function to cultulate number of guest
+// function to culculate number of guest
 function getGuest(newGuest) {
     var newQuantity;
     var resultQuantity = "";
@@ -184,7 +179,6 @@ function getGuest(newGuest) {
     });
      $("#done").html(resultQuantity);
 }
-
 
 
 
